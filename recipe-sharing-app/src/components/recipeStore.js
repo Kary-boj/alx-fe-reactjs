@@ -1,50 +1,34 @@
 import { create } from 'zustand';
 
-const useRecipeStore = create((set) => ({
-  recipes: [],
-  searchTerm: '',
-  
-  setSearchTerm: (term) => {
-    set((state) => ({
-      searchTerm: term,
-      filteredRecipes: state.recipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(term.toLowerCase()) ||
-        (recipe.ingredients &&
-          recipe.ingredients.some((ingredient) =>
-            ingredient.toLowerCase().includes(term.toLowerCase())
-          ))
-      ),
-    }));
+const useRecipeStore = create((set, get) => ({
+  recipes: [],  // All available recipes
+  favorites: [],  // User's favorite recipe IDs
+
+  // Add a recipe to favorites
+  addFavorite: (recipeId) => set((state) => ({
+    favorites: [...new Set([...state.favorites, recipeId])],  // Avoid duplicates
+  })),
+
+  // Remove a recipe from favorites
+  removeFavorite: (recipeId) => set((state) => ({
+    favorites: state.favorites.filter((id) => id !== recipeId),
+  })),
+
+  // Compute recommendations based on favorited recipes
+  recommendations: [],
+  generateRecommendations: () => {
+    const { recipes, favorites } = get();
+    const recommended = recipes.filter(
+      (recipe) => favorites.includes(recipe.id) && Math.random() > 0.5 // Mock logic
+    );
+    set({ recommendations: recommended });
   },
-  
 
-  filteredRecipes: [],
-  
-  addRecipe: (newRecipe) =>
-    set((state) => ({
-      recipes: [...state.recipes, newRecipe],
-      filteredRecipes: [...state.recipes, newRecipe], // Keep filtered list updated
-    })),
-
-  updateRecipe: (updatedRecipe) =>
-    set((state) => ({
-      recipes: state.recipes.map((recipe) =>
-        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-      ),
-      filteredRecipes: state.filteredRecipes.map((recipe) =>
-        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-      ),
-    })),
-
-  deleteRecipe: (recipeId) =>
-    set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== recipeId),
-      filteredRecipes: state.filteredRecipes.filter(
-        (recipe) => recipe.id !== recipeId
-      ),
-    })),
+  // Set recipes when fetched from API
+  setRecipes: (recipes) => set({ recipes }),
 }));
 
 export default useRecipeStore;
+
 
 
