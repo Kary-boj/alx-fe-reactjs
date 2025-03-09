@@ -14,13 +14,13 @@ function App() {
         <Navigation />
 
         <Routes>
-          {/* Home route (you can add a Home component here if necessary) */}
+          {/* Home route */}
           <Route path="/" element={<h1>Welcome to the Home Page</h1>} />
 
           {/* Login route */}
           <Route path="/login" element={<Login />} />
 
-          {/* Blog route with dynamic postId */}
+          {/* Dynamic Blog Post route */}
           <Route path="/blog/:postId" element={<BlogPost />} />
 
           {/* Protected Profile route */}
@@ -35,4 +35,5 @@ function App() {
 }
 
 export default App;
+
 
