@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useParams, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useParams } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
 
 // Home Page Component
 function Home() {
@@ -14,28 +15,20 @@ function Home() {
 
 // Profile Page Component
 function Profile() {
-  const isAuthenticated = false; // Simulated user authentication check
-
-
-  function ProtectedRoute({ element }) {
-    if (!isAuthenticated) {
-      return <Navigate to="/login" />;
-    }
-    return element;
-  }
+  const isAuthenticated = localStorage.getItem('authToken') !== null; // Replace with real authentication logic
 
   return (
     <div>
       <h1>Profile Page</h1>
-      
+
       <nav>
         <Link to="details">Profile Details</Link> | 
         <Link to="settings">Profile Settings</Link>
       </nav>
 
       <Routes>
-        <Route path="details" element={<ProtectedRoute element={<ProfileDetails />} />} />
-        <Route path="settings" element={<ProtectedRoute element={<ProfileSettings />} />} />
+        <Route path="details" element={<ProtectedRoute element={<ProfileDetails />} isAuthenticated={isAuthenticated} />} />
+        <Route path="settings" element={<ProtectedRoute element={<ProfileSettings />} isAuthenticated={isAuthenticated} />} />
       </Routes>
     </div>
   );
