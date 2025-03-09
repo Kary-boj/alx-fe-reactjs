@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import TodoList from '../component/TodoList';
+import TodoList from './components/TodoList'; // Corrected the import path
 
 const App = () => (
   <div>
@@ -9,4 +9,5 @@ const App = () => (
 );
 
 export default App;
+
 
