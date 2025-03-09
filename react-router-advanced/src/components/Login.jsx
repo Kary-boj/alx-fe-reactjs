@@ -1,8 +1,7 @@
+import React from 'react';
+
 function Login() {
-    return <h1>Login Page</h1>;
-  }
-  
-  <Routes>
-    <Route path="/login" element={<Login />} />
-  </Routes>
-  
+  return <h1>Please log in to access protected routes.</h1>;
+}
+
+export default Login;
