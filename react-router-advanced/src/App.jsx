@@ -1,23 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Login from './Login';
-import Profile from './Profile';
-import BlogPost from './BlogPost';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-export default function App() {
+function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/profile/*" element={<Profile />} />
-        <Route path="/blog/:postId" element={<BlogPost />} /> {/* Keep this route */}
+        <Route path="*" element={<NotFound />} />
+        <Route path="/user/:id" element={<UserProfile />} />
+        <Route path="/profile/*" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
 }
 
-
-
+export default App;
 

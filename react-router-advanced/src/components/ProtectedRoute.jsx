@@ -1,11 +1,11 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({ element, isAuthenticated }) {
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
-  return element;
+const isAuthenticated = () => {
+  return localStorage.getItem("auth") === "true"; // Simulate authentication
+};
+
+function ProtectedRoute({ children }) {
+  return isAuthenticated() ? children : <Navigate to="/login" />;
 }
 
 export default ProtectedRoute;

@@ -1,31 +1,21 @@
-import React from 'react';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
-import ProfileDetails from './ProfileDetails';
-import ProfileSettings from './ProfileSettings';
+import { Routes, Route, Link, Outlet } from "react-router-dom";
+import ProfileDetails from "./ProfileDetails";
+import ProfileSettings from "./ProfileSettings";
 
 function Profile() {
-  const isAuthenticated = false; // Simulate user authentication (set to true if logged in)
-
-  // Protected Route Wrapper
-  function ProtectedRoute({ element }) {
-    if (!isAuthenticated) {
-      return <Navigate to="/login" />;
-    }
-    return element;
-  }
-
   return (
     <div>
-      <h1>Profile Page</h1>
-      {/* Navigation links to nested routes */}
+      <h2>Profile Page</h2>
       <nav>
         <Link to="details">Profile Details</Link> | 
         <Link to="settings">Profile Settings</Link>
       </nav>
 
+      <Outlet /> {/* Renders nested routes here */}
+
       <Routes>
-        <Route path="details" element={<ProtectedRoute element={<ProfileDetails />} />} />
-        <Route path="settings" element={<ProtectedRoute element={<ProfileSettings />} />} />
+        <Route path="details" element={<ProfileDetails />} />
+        <Route path="settings" element={<ProfileSettings />} />
       </Routes>
     </div>
   );
@@ -33,4 +23,4 @@ function Profile() {
 
 export default Profile;
 
-  
+
