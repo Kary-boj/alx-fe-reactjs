@@ -9,15 +9,19 @@ const fetchPosts = async () => {
 };
 
 export default function PostsComponent() {
-    const { data, error, isLoading, refetch } = useQuery({
-        queryKey: ['posts'],
-        queryFn: fetchPosts,
-        staleTime: 60000, // Data remains fresh for 60 seconds
-      });      
+  const { data, error, isLoading, isError, refetch } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts,
+    staleTime: 60000, // Data remains fresh for 60 seconds
+  });
 
+  // Loading state
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
+  // Error state
+  if (isError) return <p>Error: {error.message}</p>;
+
+  // Success state
   return (
     <div>
       <h2>Posts</h2>
@@ -33,3 +37,4 @@ export default function PostsComponent() {
     </div>
   );
 }
+
