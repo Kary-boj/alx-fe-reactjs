@@ -7,16 +7,16 @@ function Home() {
     <div>
       <h1>Welcome to the Home Page</h1>
       <Link to="/profile">Go to Profile</Link><br />
-      <Link to="/blog/1">Go to Blog Post 1</Link>
+      <Link to="/blog/1">Go to Blog Post 1</Link> {/* Link to a dynamic blog post */}
     </div>
   );
 }
 
 // Profile Page Component
 function Profile() {
-  const isAuthenticated = false; // Simulate user authentication (set to true if logged in)
+  const isAuthenticated = false; // Simulated user authentication check
 
-  // Protected Route Wrapper
+
   function ProtectedRoute({ element }) {
     if (!isAuthenticated) {
       return <Navigate to="/login" />;
@@ -27,7 +27,7 @@ function Profile() {
   return (
     <div>
       <h1>Profile Page</h1>
-      {/* Navigation links to nested routes */}
+      
       <nav>
         <Link to="details">Profile Details</Link> | 
         <Link to="settings">Profile Settings</Link>
@@ -53,8 +53,8 @@ function ProfileSettings() {
 
 // Dynamic Route for Blog Post
 function BlogPost() {
-  const { postId } = useParams();
-  return <h1>Blog Post {postId}</h1>;
+  const { id } = useParams(); // Capture dynamic `id` from the URL
+  return <h1>Blog Post {id}</h1>; // Display Blog Post based on `id`
 }
 
 // Login Page (for authentication)
@@ -70,7 +70,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile/*" element={<Profile />} />
-        <Route path="/blog/:postId" element={<BlogPost />} />
+        <Route path="/blog/:id" element={<BlogPost />} /> {/* Correctly defined dynamic route */}
       </Routes>
     </Router>
   );
