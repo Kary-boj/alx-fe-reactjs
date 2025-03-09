@@ -1,13 +1,12 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "./AuthContext"; // Import useAuth
 
-const isAuthenticated = () => {
-  return localStorage.getItem("auth") === "true"; // Simulate authentication
-};
 
 function ProtectedRoute({ children }) {
-  return isAuthenticated() ? children : <Navigate to="/login" />;
+  const { isAuthenticated } = useAuth(); // Check auth status
+
+  return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
 export default ProtectedRoute;
-
 

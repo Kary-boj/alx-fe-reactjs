@@ -1,10 +1,12 @@
+import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    localStorage.setItem("auth", "true");
+    login();
     navigate("/profile");
   };
 
@@ -17,3 +19,4 @@ function Login() {
 }
 
 export default Login;
+
