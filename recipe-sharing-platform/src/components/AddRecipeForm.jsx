@@ -6,11 +6,8 @@ const AddRecipeForm = () => {
   const [instructions, setInstructions] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Basic validation checks
+  // Separate validation function
+  const validate = () => {
     const formErrors = {};
 
     if (!title) formErrors.title = "Title is required";
@@ -22,9 +19,20 @@ const AddRecipeForm = () => {
       formErrors.ingredients = "Please include at least two ingredients";
     }
 
+    return formErrors;
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Run validation
+    const formErrors = validate();
+
+    // Set the validation errors state
     setErrors(formErrors);
 
-    // If no errors, submit the form data (you can implement an actual submission logic)
+    // If no errors, submit the form data
     if (Object.keys(formErrors).length === 0) {
       console.log({ title, ingredients, instructions });
       // Reset form if successful
@@ -95,3 +103,4 @@ const AddRecipeForm = () => {
 };
 
 export default AddRecipeForm;
+
