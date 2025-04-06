@@ -15,16 +15,14 @@ export const fetchAdvancedUsers = async (username, location, minRepos, page = 1)
   const q = query.join(' '); // Join all query parameters into one string
 
   try {
-    const response = await axios.get('https://api.github.com/search/users', {
-      params: {
-        q, // The query string
-        page, // Pagination
-        per_page: 10, // Limit to 10 results per page
-      },
-    });
-    return response.data; // Return the API response
+    // Manually build the URL with the query string and pagination
+    const url = `https://api.github.com/search/users?q=${q}&page=${page}&per_page=10`;
+
+    // Make the request to the API with the URL
+    const response = await axios.get(url);
+    return response.data; // Return the search result
   } catch (error) {
-    console.error('Error fetching users:', error); // Log any errors
-    throw error; // Rethrow error so it can be handled by the calling function
+    console.error('Error fetching users:', error); // Log the error
+    throw error; // Rethrow the error to be handled elsewhere
   }
 };
