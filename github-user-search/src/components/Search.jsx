@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchAdvancedUsers } from '../services/githubService';
+import { fetchAdvancedUsers, fetchUserData } from '../services/githubService';
 
 const Search = () => {
   const [username, setUsername] = useState('');
@@ -21,8 +21,17 @@ const Search = () => {
 
   const searchUsers = async (pageNumber) => {
     try {
-      const data = await fetchAdvancedUsers(username, location, minRepos, pageNumber);
-      setResults((prev) => [...prev, ...data.items]);
+      let data;
+
+      if (location || minRepos) {
+        // Use advanced search
+        data = await fetchAdvancedUsers(username, location, minRepos, pageNumber);
+        setResults((prev) => [...prev, ...data.items]);
+      } else {
+        // Use basic search
+        const user = await fetchUserData(username);
+        setResults([{ ...user }]);
+      }
     } catch {
       setError("Looks like we cant find the user");
     } finally {
@@ -75,6 +84,7 @@ const Search = () => {
             <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
             <div>
               <h2 className="text-lg font-semibold">{user.login}</h2>
+              {user.location && <p className="text-sm text-gray-600">📍 {user.location}</p>}
               <a
                 href={user.html_url}
                 target="_blank"
@@ -88,7 +98,7 @@ const Search = () => {
         ))}
       </div>
 
-      {results.length > 0 && (
+      {results.length > 0 && location && minRepos && (
         <div className="flex justify-center mt-4">
           <button
             onClick={handleLoadMore}
@@ -103,4 +113,3 @@ const Search = () => {
 };
 
 export default Search;
-
