@@ -24,7 +24,7 @@ const Search = () => {
       const data = await fetchAdvancedUsers(username, location, minRepos, pageNumber);
       setResults((prev) => [...prev, ...data.items]);
     } catch {
-      setError('Looks like we can’t find any matching users.');
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
