@@ -48,32 +48,47 @@ const Search = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-xl">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md"
+      <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+        <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+    <input
+        id="username"
+        type="text"
+        placeholder="Enter GitHub username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className="w-full px-4 py-2 border rounded-md"
         />
+    </div>
+  <div>
+        <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
         <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md"
+            id="location"
+            type="text"
+            placeholder="e.g., Japan"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md"
         />
+        </div>
+    <div>
+        <label htmlFor="minRepos" className="block text-sm font-medium text-gray-700">Minimum Repositories</label>
         <input
-          type="number"
-          placeholder="Minimum Repositories"
-          value={minRepos}
-          onChange={(e) => setMinRepos(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md"
-        />
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
-          Search
-        </button>
-      </form>
+            id="minRepos"
+            type="number"
+            placeholder="e.g., 50"
+            value={minRepos}
+            onChange={(e) => setMinRepos(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md"
+            />
+        </div>
+        <div className="sm:col-span-2">
+                <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                    Search
+                </button>
+            </div>
+        </form>
+
 
       {loading && <p className="mt-4 text-blue-500">Loading...</p>}
       {error && <p className="mt-4 text-red-500">{error}</p>}
